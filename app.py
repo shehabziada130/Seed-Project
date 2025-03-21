@@ -1,3 +1,4 @@
+!pip install tensorflow cv2 numpy gdown 
 import numpy as np
 import os
 import cv2
