@@ -1,1 +1,6 @@
 Flask
+tensorflow
+cv2
+numpy
+gdown 
+
