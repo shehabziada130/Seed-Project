@@ -1,5 +1,1 @@
-Flask
-tensorflow
-numpy
-opencv-python
-gdown
+
