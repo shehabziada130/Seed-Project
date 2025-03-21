@@ -1,3 +1,4 @@
+!pip install gdown
 import numpy as np
 import os
 import cv2
@@ -5,11 +6,40 @@ from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.models import load_model
 from flask import Flask, request, jsonify
 
+import gdown
+import os
+from flask import Flask, request, jsonify
 
-pistachio_model=load_model('/models/pistachio_vgg_classifier.h5')
-corn_model=load_model('/models/corn_classifier.h5')
-soya_model=load_model('/models/soya_classifier.h5')
-seed_model=load_model('/models/seed_classifier.h5')
+app = Flask(__name__)
+
+# Google Drive file IDs
+model_links = {
+    "pistachio": "1--VPQcNBlI78iL9f5HGay3z_RTZ-6xGX",
+    "corn": "1Axhg5KKrEt3ribKL_YVk5PL-lIdTrf2c",
+    "soya": "1LIH5q2vm5L9ihqYs2kbVo73ewWDBp6pt",
+    "seed": "160_t0uZZknDn19HxTtbYforZIsPqmeyV"
+}
+
+# Download models function
+def download_model(model_name):
+    file_id = model_links[model_name]
+    output = f"{model_name}_classifier.h5"
+    if not os.path.exists(output):
+        gdown.download(f"https://drive.google.com/uc?id={file_id}", output, quiet=False)
+    return output
+
+# Download all models on startup
+for model in model_links:
+    download_model(model)
+
+@app.route("/")
+def home():
+    return "Seed Classification API is Running!"
+
+pistachio_model=load_model('pistachio_vgg_classifier.h5')
+corn_model=load_model('corn_classifier.h5')
+soya_model=load_model('soya_classifier.h5')
+seed_model=load_model('seed_classifier.h5')
 
 #Preprocess Functions
 def preprocess_pistachio(image_path,target_size=(224, 224)):
