@@ -32,14 +32,15 @@ def download_model(model_name):
 for model in model_links:
     download_model(model)
 
-@app.route("/")
-def home():
-    return "Seed Classification API is Running!"
+pistachio=download_model('pistachio')
+corn=download_model('corn')
+soya=download_model('soya')
+seed=download_model('seed')
 
-pistachio_model=load_model('pistachio_vgg_classifier.h5')
-corn_model=load_model('corn_classifier.h5')
-soya_model=load_model('soya_classifier.h5')
-seed_model=load_model('seed_classifier.h5')
+pistachio_model=load_model(pistachio)
+corn_model=load_model(corn)
+soya_model=load_model(soya)
+seed_model=load_model(seed)
 
 #Preprocess Functions
 def preprocess_pistachio(image_path,target_size=(224, 224)):
