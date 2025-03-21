@@ -1,4 +1,4 @@
-!pip install -r requirements.txt
+#!pip install -r requirements.txt
 import numpy as np
 import os
 import cv2
